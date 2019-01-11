@@ -1,0 +1,22 @@
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookies.js"></script>
+<script type="text/javascript" src="js/func.js"></script>
+<script language="javascript">
+    function testPhoto(){
+        $.getJSON({
+            url: "../action/regiris",
+            data:"userid=1234",
+            success:function(result) {
+                console.log("find regiris" + result);
+            },
+            error:function(){
+                alert("The system is error");
+            }
+        });
+        return false;
+    }
+</script>
+<div class="item">
+	<h2 class="title">Test</h2>
+    <button onclick="testPhoto()">Open 1</button>
+</div>

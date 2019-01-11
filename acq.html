@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Web Server</title>
+<link href="../style/css/webserver.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../js/jquery.cookies.js"></script>
+<script type="text/javascript" src="../js/func.js"></script>
+<script language="javascript">
+var AcqTimeOut = true;
+var acqFunc=function(){
+	$.getxml({
+		url: "goform/getirisimg",
+		data:"echo=hello&ok=ok",
+		success:function(result){
+			$("#video").attr("src","./temp/LIRIS.png?"+new Date().getTime());
+			if(AcqTimeOut)
+					setTimeout(acqFunc,200);
+		}
+	});
+}
+$(function(){
+	
+	acqFunc();
+$("#advanceform").ajaxForm({
+    beforeSend:function(){
+    },
+    success:function(result){
+      alert('Success!');
+    }
+  });
+});
+</script>
+</head>
+<body>
+<table class="wrapper" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class=" ViColor LeftMenu" valign="top"><div class="BackBtn"><a href="../index.html">Back</a></div>
+      <ul>
+        <li>
+          <h3>Tutorial</h3>
+        </li>
+        <li>
+          <ul>
+            <li class="select"><a href="#">Tutorial</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="bottom">
+        <div class="BottomLogo">
+          <h1>ANVIZ UltraMatch</h1>
+        </div>
+        <div class="SystemInfo">Build Version: 00.05.80</div>
+        <div class="copyright">Copyright &copy; 2001-2012 Anviz Global Inc.</div>
+      </div></td>
+    <td class="RightContent" valign="top"><div style="position:relative; height:100%; width:100%;">
+        <div class="RightContentWrapper">
+        	<div class="item" id="acquisition">
+            	<h2 class="title">Tutorial</h2>
+                <div class="irisWrapBox">
+                    <div class="irisWrap">
+                        <img id="video" width="320" height="240" src="" />
+                        <div class="dotted"></div>
+                    </div>
+                    <div class="tips">
+                         Please learn to place your iris, before registration<br />
+                    1、Please check if the reminderlight around mirror turn green.<br />
+                    2、Move forward or backward till the reminderlight turn once into blue and once into red.
+                    </div>
+                </div>
+                <div class="irisWrapBox">
+                    <div class="irisWrap">
+                        <div class="dotted"></div>
+                    </div>
+                    <div class="tips">Refernce</div>
+                </div>
+            </div>
+  <form id="advanceform" method="post" action="../goform/SetAdvanceParam">
+    <h2 class="title LTXT" av_lang="advance_configure">Advance configure</h2>
+    <div class="clearB"></div>
+    <label class="itemtitle"></label>
+    <div class="itemContent">
+      <input class="changeStep LINPUT" av_lang="ranging" type="submit" value="测距" />
+    </div>
+  </form>
+        </div>
+      </div>
+      </div></td>
+  </tr>
+</table>
+<div id="loadingDiv" style="display:none;">
+  <div class="item">
+    <center>
+      <img src="../style/img/loading.gif" height="15" width="200" class="loading" />
+    </center>
+    <center>
+      Loading
+    </center>
+  </div>
+</div>
+</body>
+</html>

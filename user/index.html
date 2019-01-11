@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Web Server</title>
+<link href="../style/css/webserver.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../js/jquery.cookies.js"></script>
+<script type="text/javascript" src="../js/func.js"></script>
+<script language="javascript">
+var edit_userid = 0;
+var edit_username = "";
+var edit_cardid = "";
+$(function(){
+	var loadDiv = $("#loadingDiv").clone();
+	$(".LeftMenu ul li ul li a").click(function(){
+		if($(this).hasClass("select"))
+			return false;
+			
+		$(".LeftMenu ul li ul li.select").removeClass("select");
+		$(this).parent().addClass("select");
+		
+		var url = $(this).attr("href");
+		if(url == "" || url==undefined)
+			return false;
+		url = url+"?"+new Date().getTime();
+		$(".RightContentWrapper").empty().append(loadDiv.html());
+		$(".RightContentWrapper").load(url,function(data){
+			AcqTimeOut=false;
+		});
+		return false;
+	});
+	$(".LeftMenu ul li ul li a").eq(0).trigger("click");
+});
+</script>
+</head>
+<body>
+<table class="wrapper" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class=" ViColor LeftMenu" valign="top"><div class="BackBtn"><a href="../index.html">Back</a></div>
+      <ul>
+        <li>
+          <h3>Users Managerment</h3>
+        </li>
+        <li>
+          <ul>
+            <li class="select"><a href="list.html">User List</a></li>
+            <li><a href="add.html">Add User</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="bottom">
+        <div class="BottomLogo">
+          <h1>ANVIZ UltraMatch</h1>
+        </div>
+        <div class="copyright">Copyright &copy; 2001-2012 Anviz Global Inc.</div>
+      </div></td>
+    <td class="RightContent" valign="top"><div style="position:relative; height:100%; width:100%;">
+        <div class="RightContentWrapper"></div>
+      </div>
+      </div></td>
+  </tr>
+</table>
+<div id="loadingDiv" style="display:none;">
+  <div class="item">
+    <center>
+      <img src="../style/img/loading.gif" height="15" width="200" class="loading" />
+    </center>
+    <center>
+      Loading
+    </center>
+  </div>
+</div>
+</body>
+</html>

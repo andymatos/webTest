@@ -1,0 +1,336 @@
+<script language="javascript">
+var sImg1 = -1; sImg2 = -1;sImg3 = -1; sImg4 = -1; cImg = -1;
+var isAcq = false;
+var AcqTimeOut = false;
+var isCard = true;
+var acqFunc=function(){
+	$.getxml({
+		url: "../goform/getirisimg",
+		data:"echo=hello&ok=ok",
+		success:function(result){
+			$("#video0").attr("src","../temp/LIRIS.png?"+new Date().getTime());
+			$("#video1").attr("src","../temp/RIRIS.png?"+new Date().getTime());
+			if(AcqTimeOut)
+					setTimeout(acqFunc,200);
+		}
+	});
+}
+function GetWebServerCardCtl(){
+  
+  var url = "../goform/GetWebServerCardCtl";
+  $.getxml({
+    url: url,
+    data:"Type=0",
+    success:function(result){
+      $("#cardid").val(result.card);
+    }
+  });
+}
+function checkRegStep1(t){
+	if($("#editUser #userid").val()==""){
+		alert("Please enter the User ID!");
+		return false;
+	}
+	if($("#editUser #username").val()==""){
+		alert("Please enter the User Name!");
+		return false;
+	}
+	if(t=="acq"){
+		isAcq=true;
+		AcqTimeOut = true;
+		isCard = false;
+		$("#editUser #regStep1").hide();
+		$("#editUser #regACQ").show();
+		acqFunc();
+		$("#editUser #regloadingDiv").hide();
+		$("#editUser #regStep2").hide();
+	}else{
+		AcqTimeOut=false;
+		isAcq=false;
+		isCard = false;
+		takePhoto();
+	}
+}
+function checkRegPreStep(t){
+	if(t==0){
+		AcqTimeOut=false;
+		isCard=true;
+		$("#editUser #regStep1").show();
+		$("#editUser #regACQ").hide();
+		$("#editUser #regloadingDiv").hide();
+		$("#editUser #regStep2").hide();
+	}else if(isAcq){
+		AcqTimeOut=true;
+		$("#editUser #regStep1").hide();
+		$("#editUser #regACQ").show();
+		acqFunc();
+		$("#editUser #regloadingDiv").hide();
+		$("#editUser #regStep2").hide();
+	}else{
+		AcqTimeOut=false;
+		$("#editUser #regStep1").show();
+		$("#editUser #regACQ").hide();
+		$("#editUser #regloadingDiv").hide();
+		$("#editUser #regStep2").hide();
+	}
+		
+}
+function takePhoto(){
+	$("#editUser #regStep1").hide();
+	$("#editUser #regACQ").hide();
+	AcqTimeOut=false;
+	$("#editUser #regloadingDiv").show();
+	$("#editUser #regStep2").hide();
+	
+	$.getxml({
+		url: "../goform/regiris",
+		data:"userid="+$("#editUser #userid").val(),
+		success:function(result){
+			$(".ChoseIrisImgList .Choosed").removeClass("Choosed").addClass("Choose");
+			for(var i=0; i<10; i++){
+				score_tmp = eval('(result.bmp'+i+')');
+				if(score_tmp == -1)
+					$(".ChoseIrisImgList img").eq(i).attr("src","../iris_no.bmp?"+new Date().getTime());
+				else
+					$(".ChoseIrisImgList img").eq(i).attr("src","../temp/iris_"+i+".bmp?"+new Date().getTime());
+				$(".ChoseIrisImgList > div.score").eq(i).attr("title", score_tmp);
+				$(".ChoseIrisImgList > div.score").eq(i).text(score_tmp);
+			}
+			changeBigPic(0);
+			$(".ChoseIrisImg .Choosed").removeClass("Choosed").addClass("Choose");
+			$(".ChoseIrisImg input:button").val("Select");
+			cImg = 0;
+			sImg1 = -1;
+			sImg2 = -1;
+			sImg3 = -1;
+			sImg4 = -1;
+			
+			$("#editUser #regloadingDiv").hide();
+			$("#editUser #regStep2").show();
+		},
+		error:function(){ 
+			alert("The system is error");
+			checkRegPreStep(1);
+		}
+	});
+	
+	return false;
+}
+function changeBigPic(i){
+	cImg = i;
+	var src = $(".ChoseIrisImgList img").eq(i).attr("src");
+	var score = $(".ChoseIrisImgList .score").eq(i).attr("title");
+
+	$(".ChoseIrisImgList .Choose.focus").removeClass("focus");
+	$(".ChoseIrisImgList").eq(i).find(".Choose").addClass("focus");
+
+	$(".ChoseIrisImg img").attr("src", src);
+	$(".ChoseIrisImg .score").attr("title",score);
+	$(".ChoseIrisImg .score").text(score);
+	$(".ChoseIrisImg .Choosed").removeClass("Choosed").addClass("Choose");
+	$(".ChoseIrisImg input:button").val("Select");
+	if(cImg==sImg1 || cImg==sImg2 || cImg==sImg3 || cImg==sImg4){
+		$(".ChoseIrisImg .Choose").removeClass("Choose").addClass("Choosed");	
+		$(".ChoseIrisImg input:button").val("Cancel");
+	}
+}
+function choosePic(){
+	if(cImg==sImg1 || cImg==sImg2 || cImg==sImg3 ||cImg==sImg4){
+		$(".ChoseIrisImgList").eq(cImg).find(".Choosed").removeClass("Choosed").addClass("Choose");
+		$(".ChoseIrisImg .Choosed").removeClass("Choosed").addClass("Choose");
+		$(".ChoseIrisImg input:button").val("Select");
+		if(cImg==sImg1){
+			sImg1 = -1;
+		}else if(cImg==sImg2){
+			sImg2=sImg1;
+			sImg1 = -1;
+		}else if(cImg==sImg3){
+			sImg3 = -1;
+		}else if(cImg==sImg4){
+			sImg4=sImg3;
+			sImg3 = -1;
+		}
+	}else{
+		if(cImg < 5){
+			if(sImg1>=0){
+				$(".ChoseIrisImgList").eq(sImg1).find(".Choosed").removeClass("Choosed").addClass("Choose");
+			}
+			$(".ChoseIrisImg .Choose").removeClass("Choose").addClass("Choosed");
+			$(".ChoseIrisImg input:button").val("Cancel");
+			$(".ChoseIrisImgList").eq(cImg).find(".Choose").removeClass("Choose").addClass("Choosed");
+			sImg1=sImg2;
+			sImg2=cImg;
+		}else{
+			if(sImg3>=0){
+				$(".ChoseIrisImgList").eq(sImg3).find(".Choosed").removeClass("Choosed").addClass("Choose");
+			}
+			$(".ChoseIrisImg .Choose").removeClass("Choose").addClass("Choosed");
+			$(".ChoseIrisImg input:button").val("Cancel");
+			$(".ChoseIrisImgList").eq(cImg).find(".Choose").removeClass("Choose").addClass("Choosed");
+			sImg3=sImg4;
+			sImg4=cImg;
+		}
+	}
+	$("#editUserForm #bmp0").val(sImg1);
+	$("#editUserForm #bmp1").val(sImg2);
+	$("#editUserForm #bmp2").val(sImg3);
+	$("#editUserForm #bmp3").val(sImg4);
+}
+$(function(){
+	$("#userid").val(edit_userid);
+	$("#username").val(edit_username);
+	$("#cardid").val(edit_cardid);
+	$("#IdentifyMode").val(edit_mode);
+
+	$("#editUserForm").ajaxForm({
+		
+		beforeSend:function(){
+			if($("#editUser #userid").val()==""){
+				alert("Please enter the User ID!");
+				return false;
+			}
+			if($("#editUser #username").val()==""){
+				alert("Please enter the User Name!");
+				return false;
+			}
+			/*if($("#addUser #password").val()==""){
+				alert("Please enter the password!");
+				return false;
+			}*/
+			if(isCard && $("#editUser #cardid").val()==""){
+				alert("Please set the card");
+				return false;	
+			}
+			if(!isCard && (sImg1==-1 || sImg2==-1)){
+				/*alert("Please select two photos");
+				return false;*/
+			}
+		},
+		success:function(result){
+			alert("Register success!");
+			url = "add.html?"+new Date().getTime();
+			var loadDiv = $("#loadingDiv").clone();
+			$(".RightContentWrapper").empty().append(loadDiv.html())
+			$(".RightContentWrapper").load(url);
+		},
+		error:function(result){
+			if((result.msg == "" || result.msg == undefined) && confirm("Register fail! If you want to feed this bug, please press 'yes' or press 'No' to retry")){
+				url = "feed.html?"+new Date().getTime();
+				var loadDiv = $("#loadingDiv").clone();
+				$(".RightContentWrapper").empty().append(loadDiv.html())
+				$(".RightContentWrapper").load(url);
+			}else {
+				if(result.msg != "" && result.msg != undefined && confirm(result.msg)){
+					checkRegPreStep(0);
+				}else{
+					checkRegPreStep(0);
+				}
+			}
+		}
+	});
+});
+</script>
+<div class="item" id="editUser">
+	<form id="editUserForm" method="post" action="../goform/edituser">
+    	<input type="hidden" id="bmp0" name="bmp0" value="-1" />
+    	<input type="hidden" id="bmp1" name="bmp1" value="-1" />
+    	<input type="hidden" id="bmp2" name="bmp2" value="-1" />
+    	<input type="hidden" id="bmp3" name="bmp3" value="-1" />
+        <span id="regStep1">
+            <h2 class="title">Edit User</h2>
+            <div class="clearB"></div>
+            <label class="itemtitle">User ID</label>
+            <div class="itemContent"><input class="text" type="text" id="userid" name="userid" value="" readonly=readonly /></div>
+            <div class="clearB"></div>
+            <label class="itemtitle">User Name</label>
+            <div class="itemContent"><input class="text" type="text" id="username" name="username" value="" /></div>
+            <div class="clearB"></div>
+            <label class="itemtitle">Identify Mode</label>
+            <div class="itemContent">
+            	<select id="IdentifyMode" name="IdentifyMode">
+                	<option value=0 selected="selected">Default</option>
+                    <option value=1>Single Iris</option>
+                    <option value=2>Double Iris</option>
+                    <option value=3>Card</option>
+                    <option value=4>Card and Single Iris</option>
+                    <option value=5>Card and Double Iris</option>
+                    <option value=6>Card or Single Iris</option>
+                    <option value=7>Card or Double Iris</option>
+                  </select>
+            </div>
+        	<div class="clearB"></div>
+            <label class="itemtitle">Card NO.</label>
+            <div class="itemContent"><input type="text" value="" style="width:120px;" id="cardid" name="cardid" /><input class="btn" value="Press to read" type="button" onclick="GetWebServerCardCtl();" /></div>
+            <div class="clearB"></div>
+            <input class="cancel" type="button" value="Tutorial"  onclick="checkRegStep1('acq');" />
+            <input class="changeStep" type="button" value="Next Step" onclick="checkRegStep1()" />
+            <input class="changeStep" type="submit" value="Finish" />
+        </span>
+        <span id="regACQ" style="display:none;">
+        	<h2 class="title">Tutorial</h2>
+            <div class="irisWrapBox">
+                <div class="irisWrap">
+                    <img id="video" width="320" height="240" src="" />
+                    <div class="dotted"></div>
+                </div>
+                <div class="tips">
+                    Please learn to place your iris, before registration<br />
+                    1、Please check if the reminderlight around mirror turn green.<br />
+                    2、Move forward or backward till the reminderlight turn once into blue and once into red.
+                </div>
+            </div>
+            <div class="irisWrapBox">
+                <div class="irisWrap">
+                    <div class="dotted"></div>
+                </div>
+                <div class="tips">Reference</div>
+            </div>
+            <div class="clearB"></div>
+            <input class="cancel" type="button" value="Previous Step"  onclick="checkRegPreStep(0);" />
+            <input class="changeStep" type="button" value="Register" onclick="takePhoto();" />
+        </span>
+        <div id="regloadingDiv" style="display:none;">
+          <div class="item">
+            <center>
+              <img src="../style/img/loading.gif" height="15" width="200" class="loading" />
+            </center>
+            <center>
+              Loading
+            </center>
+          </div>
+        </div>
+        <span id="regStep2" style="display:none;">
+        	<h2 class="title">Edit User</h2>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td valign="top" width="348"><div class="ChoseIrisImg">
+                      <!--Choose是未选中状态，Choosed是选中状态-->
+                      <div class="Choosed"><b></b><input type="button" value="Select"  onclick="choosePic();" /></div><div class="score" title="87">87</div><img src="" width="338" /></div>
+                      
+                      <div class="ChoseIrisImgListWrap">
+                          <!--Choose是未选中状态，Choosed是选中状态-->
+                          <div class="ChoseIrisImgList" onclick="changeBigPic(0);"><div class="Choosed"><b></b></div><div class="score" title="87">87</div><img src="" /></div>
+                          <div class="ChoseIrisImgList" onclick="changeBigPic(1);"><div class="Choose"><b></b></div><div class="score" title="78">78</div><img src="" /></div>
+                         <!-- <div class="ChoseIrisImgList" onclick="changeBigPic(2);"><div class="Choose"><b></b></div><div class="score" title="75">75</div><img src="" /></div>
+                          <div class="ChoseIrisImgList" onclick="changeBigPic(3);"><div class="Choose"><b></b></div><div class="score" title="50">50</div><img src="" /></div>
+                          <div class="ChoseIrisImgList" onclick="changeBigPic(4);"><div class="Choose"><b></b></div><div class="score" title="40">40</div><img src="" /></div> -->
+                          <!--Choose是未选中状态，Choosed是选中状态-->
+                          <div class="ChoseIrisImgList" onclick="changeBigPic(5);" style="clear:both;"><div class="Choosed"><b></b></div><div class="score" title="87">87</div><img src="" /></div>
+                          <div class="ChoseIrisImgList" onclick="changeBigPic(6);"><div class="Choose"><b></b></div><div class="score" title="78">78</div><img src="" /></div>
+                          <!-- <div class="ChoseIrisImgList" onclick="changeBigPic(7);"><div class="Choose"><b></b></div><div class="score" title="75">75</div><img src="" /></div>
+                          <div class="ChoseIrisImgList" onclick="changeBigPic(8);"><div class="Choose"><b></b></div><div class="score" title="50">50</div><img src="" /></div>
+                          <div class="ChoseIrisImgList" onclick="changeBigPic(9);"><div class="Choose"><b></b></div><div class="score" title="40">40</div><img src="" /></div> -->
+                      </div>
+                      <div class="tips"> Please learn to place your iris, before registration<br />
+                    1、Please check if the reminderlight around mirror turn green.<br />
+                    2、Move forward or backward till the reminderlight turn once into blue and once into red.</div>
+                  </td>
+                </tr>
+            </table>
+            <div class="clearB"></div>
+            <input class="cancel" type="button" value="Previous Step"  onclick="checkRegPreStep(1);" />
+            <input class="cancel" type="button" value="Photo again"  onclick="takePhoto();" />
+            <input class="changeStep" type="submit" value="Finish" />
+        </span>
+    </form>
+</div>

@@ -1,0 +1,66 @@
+﻿<script language="javascript">
+var takei = 0;
+var takePhoto = false;
+var acqFunc=function(){
+		$.getxml({
+			url: "../goform/getirisimg",
+			data:"echo=hello&ok=ok",
+			success:function(result){
+				$("#video").attr("src","../iris.png?"+new Date().getTime());
+				if(!takePhoto)
+					setTimeout(acqFunc,200);
+			}
+		});
+	}
+function takephoto(){
+	if(takei>4)
+		return false;
+	takePhoto = true;
+	$.getxml({
+		url: "../goform/takeirisimg",
+		data: "echo=hello&ok=ok",
+		success:function(result){
+			$(".ChoseIrisImgList").eq(takei).addClass("Choosed").html("<img src='../iris.png?"+new Date().getTime()+"' />");
+			takei++;
+			takePhoto = false;
+			acqFunc();
+			if(takei > 4){
+				$("#takePhoto").disabled();
+			}
+		}
+	});
+}
+$(function(){
+	acqFunc();
+});
+</script>
+<div class="item" id="feed">
+	<h2 class="title">Feed Bug</h2>
+    <div class="irisWrapBox">
+        <div class="irisWrap">
+            <img id="video" width="320" height="240" src="temp.png" />
+            <div class="dotted"></div>
+        </div>
+        <div class="tips">
+             Please learn to place your iris, before registration<br />
+                    1、Please check if the reminderlight around mirror turn green.<br />
+                    2、Move forward or backward till the reminderlight turn once into blue and once into red.
+        </div>
+    </div>
+    <div class="irisWrapBox">
+        <div class="irisWrap">
+            <div class="dotted"></div>
+        </div>
+        <div class="tips">Reference</div>
+    </div>
+    <div class="ChoseIrisImgListWrap">
+        <!--Choose是未选中状态，Choosed是选中状态-->
+        <div class="ChoseIrisImgList"></div>
+        <div class="ChoseIrisImgList"></div>
+        <div class="ChoseIrisImgList"></div>
+        <div class="ChoseIrisImgList"></div>
+        <div class="ChoseIrisImgList"></div>
+    </div>
+    <div class="clearB"></div>
+    <input class="changeStep" id="takePhoto" type="button" value="Take Photo" onclick="takephoto();" />
+</div>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Home Page</title>
+</head>
+<link href="style/css/webserver.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookies.js"></script>
+<script type="text/javascript" src="js/func.js"></script>
+
+<div class="PadSystem">
+    <div class="SystemTitle">
+        <h1>Pixsur</h1>
+        <div class="UserInfo">
+            <h3></h3>
+            <ul class="EditUserInfo">
+                <li><a href="javascript:void(0);" onclick="changePassword();">Modify Password</a></li>
+                <li><a href="javascript:void(0);" onclick="logout();">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="managementList">
+        <ul>
+            <li class="employeeManagement"><a href="user/index.html"><span></span><b>Users Management</b></a></li>
+            <li class="recordManagement"><a href="network/index.html"><span></span><b>Network</b></a></li>
+            <li class="baseSet"><a href="basic/index.html"><span></span><b>Basic Settings</b></a></li>
+            <li class="systemSet"><a href="advance/index.html"><span></span><b>Advance Settings</b></a></li>
+            <li class="test"><a href="test.html"><span></span><b>Test</b></a> </li>
+        </ul>
+    </div>
+    <div class="IrisImg"></div>
+    <div class="deviceInfo" style="display:none;">
+        <b>Firmware Version: </b><span id="Build_Version"></span>
+        <b>Templates: </b><span id="MaxFP"></span>
+        <b>Users: </b><span id="MaxUser"></span>
+        <b>Records: </b><span id="MaxRecord"></span>
+        <b>Serial: </b><span id="Serial"></span>
+    </div>
+</div>
+</html>

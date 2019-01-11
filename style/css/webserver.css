@@ -1,0 +1,970 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	outline: 0;
+	font-family: 'Microsoft YaHei UI', 'Microsoft YaHei', SimSun, 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+	outline: 0 auto -webkit-focus-ring-color;
+	outline-offset: -2px;
+	border-radius:0.4em;
+}
+div,input{
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+@media screen and (max-width:720px){
+}
+@media screen and (min-width:480px){
+}
+table,tr,td,th{
+	border-radius:0em;}
+html, body {
+	border-radius:0;
+	background: #222;
+	overflow: auto;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.wrapper {
+	height: 100%;
+	position: relative;
+	width:100%;
+	margin: 0 auto;
+	overflow:hidden;
+}
+/*General*/
+input.text {
+	margin-right: 5px;
+	text-indent: 5px;
+	height: 22px;
+	border: 0;
+	background: #f0f0f0;
+	color: #999;
+	border: 1px solid #ddd;
+}
+input.text:focus {
+	border: 1px solid #09F;
+	background: #fff;
+	color: #0081cc;
+}
+.ViColor {
+	color: #fff;
+	background: #0081cc;
+}
+.ViColorInverse {
+	color: #0081cc;
+	background: #fff;
+}
+.loading {
+	background: #f0f0f0
+}
+h2 {
+	color: #0081cc;
+	font-size:1.5em;
+	font-weight: normal;
+	padding: 0 0 10px 0;
+	clear: both;
+}
+.item {
+	width:90%;
+	padding-bottom: 25px;
+	display: block;
+	overflow: hidden;
+}
+label.itemtitle {
+	height: 22px;
+	line-height: 22px;
+	width: 35%;
+	float: left;
+	color: #555;
+}
+.itemContent {
+	height: 22px;
+	line-height: 22px;
+	width: 65%;
+	min-width:500px;
+	float: left;
+	color: #0081cc;
+}
+.search {
+	height: 25px;
+	margin-bottom: 10px;
+}
+.search label {
+	padding-right: 5px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	float: left;
+}
+.search input.s {
+	margin-right: 5px;
+	float: left;
+	text-indent: 5px;
+	height: 22px;
+	border: 0;
+	background: #f0f0f0;
+	color: #999;
+	border: 1px solid #ddd;
+}
+.search input.s:focus {
+	border: 1px solid #09F;
+	background: #fff;
+	color: #0081cc;
+}
+.search input.btn {
+	float: left;
+	width: 24px;
+	height: 24px;
+	border: 0;
+	background: url(../img/bg.png) no-repeat 0 0;
+}
+.EditUser, .DelUser, .manage, .manageAct {
+	line-height: 25px;
+	float: left;
+	margin: 5px;
+	padding: 0 5px;
+	color: #fff;
+	cursor: pointer;
+}
+.EditUser {
+	background: #09F;
+}
+.DelUser {
+	background: #C00;
+}
+.manage, .manageAct {
+	float: left;
+	color: #555;
+	padding: 0 11px 0 5px;
+	background: url(../img/bg.png) no-repeat right -84px;
+}
+.manageAct {
+	background-position: right -109px;
+	background-color: #d3d3d4;
+}
+select {
+	line-height: 20px;
+	padding: 2px;
+	color: #555;
+	font-size: 12px;
+}
+option {
+	border-color: #555;
+	font-size: 12px;
+}
+select {
+	border: 1px solid #ccc;
+}
+option:hover {
+	background: #f1f1f1;
+	color: #555;
+}
+.clearB {
+	height: 10px;
+	clear: both;
+	display: block;
+}
+/*Login*/
+.LoginWrap {
+	position: fixed;
+	_position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: rgba(0,0,0,0.8);
+}
+
+.LoginBox {
+	position: fixed;
+	_position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -35% auto auto -25%;
+	width: 50%;
+	height: 50%;
+	z-index: 99999;
+	padding: 30px;
+	filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#076ef5, endColorStr=#0050b8);
+	background: linear-gradient(#076ef5, #0050b8);
+	background: -webkit-linear-gradient(#076ef5, #0050b8);
+	background: -moz-linear-gradient#076ef5, #0050b8);
+	background: -ms-linear-gradient(#076ef5, #0050b8);
+	border:0.1em solid rgba(255,255,255,0.3);
+	border-radius:1em;
+}
+@media screen and (max-width:1400px){
+.LoginBox {
+	width:400px;
+	height:275px;
+	margin: -160px auto auto -215px;
+}
+}
+@media screen and (min-width:1400px){
+.LoginBox {
+	width:500px;
+	height:300px;
+	margin: -175px auto auto -265px;
+}
+}
+.LoginLogo {
+	height: 15%;
+	clear: both;
+}
+.LoginLogo small {
+	display: block;
+	height: 100%;
+	width: 100%;
+	float: left;
+	background: url(../img/logo.png) no-repeat;
+	background-size:auto 80%;
+}
+.LoginLogo b {
+	float: right;
+	line-height: 30px;
+	font-size: 30px;
+	color: #0081cc;
+	font-weight: normal;
+}
+.Login {
+	overflow: hidden;
+	height:80%;
+}
+.Login input.LoginName, .Login input.LoginPassword {
+	text-indent: 5px;
+	color: #555;
+	border: 0;
+	height: 20%;
+	line-height: 30px;
+	width: 100%;
+	border:0.1em solid rgba(255,255,255,0.3);
+	border-radius:0.5em;
+}
+.Login input.LoginName{
+	margin-top:2.5%;
+}
+.Login div.Button {
+	width:100%;
+	height: 20%;
+	float: right;
+	clear: both;
+}
+.LoginButton, .LoginCancel {
+	line-height: 100%;
+	border-width: 1%;
+	border-style: solid;
+	border-color: #fff;
+	padding: 0 20px;
+	margin-right:4%;
+	height:100%;
+	width:35%;
+	color: #fff;
+	float: left;
+	background-color: #00a0e9;
+	border:0.1em solid rgba(255,255,255,0.3);
+	border-radius:0.5em;
+}
+.LoginCancel {
+	background: #555;
+}
+.LoginButton:hover {
+	background: rgba(0,0,0,0.5);
+}
+.LoginCancel:hover {
+	background: #50f;
+}
+.LoginButton:active {
+	background: rgba(0,0,0,0.7);
+}
+.LoginCancel:active {
+	background: #3b00b0;
+}
+/*TableList*/
+
+.TableList {
+	text-align: left;
+	width: 100%;
+	line-height: 35px;
+	text-indent: 5px;
+	padding-bottom: 10px;
+}
+.TableList th {
+	text-align: left;
+	padding-right: 10px;
+	font-size: 14px;
+	font-weight: normal;
+	background: #fff;
+	border-bottom: 2px solid #dedede;
+}
+.TableList tr:hover {
+	background: #f8f8f8;
+}
+.TableList td {
+	font-size: 12px;
+	border-bottom:1px solid #f0f0f0;
+}
+.TableList td div, .TableList td a {
+	text-indent: 0;
+}
+/*page*/
+.page ul {
+}
+.page ul li a {
+	color: #555;
+	text-decoration: none;
+	font-size: 1em;
+	display: block;
+	float: left;
+	padding: 0 1em;
+	background: #eee;
+	line-height: 2em;
+	cursor: pointer;
+}
+.page ul li:hover a {
+	color: #000;
+	background: #e2e1e1;
+}
+.page ul li.select a {
+	padding: 0 0.5em;
+	font-size: 1.5em;
+	line-height:1.35em;
+	color: #fff;
+	background: #0081cc;
+}
+/*Top*/
+.Top {
+	height: 60px;
+}
+.logo {
+	margin: 17.5px 20px;
+	height: 25px;
+	width: 295px;
+	background: url(../img/bg.png) no-repeat -87px -109px;
+}
+/*LeftMenu*/
+.LeftMenu {
+	width:35%;
+	height:100%;
+	min-width:257px;
+}
+.BackBtn{
+	float:left;
+	margin-left:2%;
+	margin-top:55px;
+	max-width:3em;
+	width:15%;
+	height:5em;
+	background:url(../img/back.png) center top no-repeat;
+	background-size:100%;
+}
+.BackBtn a{
+	text-indent:-9000px;
+	display:block;
+	line-height:5em;
+}
+.LeftMenu > ul {
+	height:80%;
+	width:80%;
+	float:right;
+	padding-top:50px;
+	font-size: 12px;
+}
+.LeftMenu ul li h3{
+	color: #fff;
+	text-decoration: none;
+	display: block;
+	padding-left: 5%;
+	font-weight: normal;
+	font-size:2.5em;
+}
+.LeftMenu ul li a {
+	color: #fff;
+	display: block;
+	text-decoration: none;
+	line-height: 200%;
+}
+.LeftMenu ul li > ul {
+	padding-top:5%
+}
+.LeftMenu ul li ul li a {
+	padding-left: 8%;
+	margin-bottom:1%;
+	font-size:2em;
+	border-radius:0.3em 0 0 .3em;
+}
+.LeftMenu ul li a:hover {
+	background: #08c;
+}
+.LeftMenu ul li ul li a:hover {
+	background: #09d;
+}
+.LeftMenu ul li ul li a:active, .LeftMenu ul li ul li.select a, .LeftMenu ul li H3 a:active, .LeftMenu ul li H3.select a {
+	background: #fff;
+	color: #0081cc;
+	margin-right:-1px;
+}
+/*RightContent*/
+.RightContent {
+	position: relative;
+	width: 810px;
+	background: #fff;
+}
+.RightContentWrapper {
+	right:0;
+	bottom:0;
+	left:0;
+	position:absolute;
+	top:0;
+	padding-left:8%;
+	padding-top:50px;
+	overflow: auto;
+	background: #fff;
+}
+/*irisWrap*/
+.irisWrapBox{
+	float:left;
+	width:50%;
+	vertical-align:top;
+	min-width:345px;
+}
+.irisWrap {
+	width: 320px;
+	height: 240px;
+	position: relative;
+	background: url(../img/bg.png) 0 -134px #ccc;
+}
+.irisWrap div.dotted {
+	background: url(../img/bg.png) 0 -47px no-repeat;
+	width: 87px;
+	height: 87px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -33px auto auto -33px;
+}
+.tips {
+	clear: both;
+	font-size: 12px;
+	line-height: 22px;
+	padding: 10px 0;
+}
+/*CreatUser*/
+.CreatUser {
+	padding: 5px;
+	overflow: hidden;
+	float: left;
+	cursor: pointer;
+}
+.CreatUser:hover {
+	background: #e5e5e5;
+}
+.addIco {
+	height: 35px;
+	width: 35px;
+	line-height: 35px;
+	text-align: center;
+	font-size: 30px;
+	float: left;
+	background: #d3d3d3;
+}
+.addTitle {
+	padding: 0 5px;
+	width: 150px;
+	line-height: inherit;
+	float: left;
+}
+/*button*/
+.button {
+	float: left;
+}
+.changeStep, .cancel {
+	margin: 10px 10px 10px 0;
+	padding: 0 3em;
+	font-size:1em;
+	float: left;
+	height: 3em;
+	line-height:100%;
+	border:0.1em solid rgba(255,255,255,0.3);
+	border-radius:0.5em;
+}
+.changeStep:hover, .cancel:hover {
+	background-position: 0 -25px;
+	-webkit-transition: background-position .1s linear;
+	-moz-transition: background-position .1s linear;
+	-ms-transition: background-position .1s linear;
+	-o-transition: background-position .1s linear;
+	transition: background-position .1s linear
+}
+.changeStep:hover, .EditUser:hover {
+	background-color: #008ee0;
+}
+.cancel:hover, .DelUser:hover {
+	background-color: #e03a00;
+}
+.changeStep:active, .EditUser:active {
+	background-color: #0076bb;
+}
+.cancel:active, .DelUser:active {
+	background-color: #d41e00;
+}
+.changeStep {
+	background-color: #0081cc;
+	color: #fff;
+}
+.cancel {
+	background-color: #555;
+	color: #fff;
+}
+/*ChoseIrisImg*/
+.ChoseIrisImg {
+	position: relative;
+	float: left;
+	width: 488px;
+	height: 328px;
+	margin-right:1em;
+	margin-bottom:1em;
+}
+.ChoseIrisImg img {
+	width: 488px;
+	height: 328px;
+}
+.ChoseIrisImg div.Choose {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 480px;
+	height: 320px;
+}
+.ChoseIrisImg div.score {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 25px;
+	text-align: center;
+	line-height: 40px;
+	font-weight: normal;
+	overflow: hidden;
+	display: block;
+	height: 40px;
+	width: 40px;
+	background: #fff;
+	background: rgba(255,255,255,0.5);
+}
+.ChoseIrisImg div.Choose input {
+	padding: 0 5px;
+	position: absolute;
+	line-height: 25px;
+	height: 25px;
+	bottom: 10px;
+	left: 10px;
+	border: 0;
+	background: #0081cc;
+	color: #fff;
+}
+.ChoseIrisImg div.Choosed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 480px;
+	height: 320px;
+	border: 4px solid #0081cc;
+}
+.ChoseIrisImg div.Choosed b {
+	position: absolute;
+	right: -4px;
+	top: -4px;
+	display: block;
+	height: 50px;
+	width: 50px;
+	background: url(../img/bg.png) right 0 no-repeat;
+}
+.ChoseIrisImg div.Choosed input {	
+	margin: 10px 10px 10px 0;
+	padding: 0 3em;
+	font-size:1em;
+	float: left;
+	height: 3em;
+	line-height:100%;
+	border:0.1em solid rgba(255,255,255,0.3);
+	border-radius:0.5em;
+	position: absolute;
+	bottom: 6px;
+	left: 6px;
+	background: #C00;
+	color: #fff;
+}
+.ChoseIrisImgListWrap {
+	display:inline-table;
+	margin-right:2em;
+}
+.ChoseIrisImgList {
+	position: relative;
+	float: left;
+	width: 80px;
+	height: 60px;
+	margin: 0 10px 10px 0;
+}
+.ChoseIrisImgList img {
+	width: 80px;
+	height: 60px;
+}
+.ChoseIrisImgList div.Choose {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 72px;
+	height: 52px;
+}
+.ChoseIrisImgList div.score {
+	position: absolute;
+	left: 0;
+	top: 0;
+	font-size: 12px;
+	text-align: center;
+	line-height: 20px;
+	font-weight: normal;
+	overflow: hidden;
+	display: block;
+	height: 20px;
+	width: 20px;
+	background: #fff;
+	background: rgba(255,255,255,0.5);
+}
+.ChoseIrisImgList div.Choose b {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.ChoseIrisImgList div.Choosed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 72px;
+	height: 52px;
+	border: 4px solid #0081cc;
+}
+.ChoseIrisImgList div.Choosed b {
+	position: absolute;
+	right: -4px;
+	top: -4px;
+	overflow: hidden;
+	text-indent: 10000px;
+	display: block;
+	height: 50px;
+	width: 50px;
+	background: url(../img/bg.png) right 0 no-repeat;
+}
+/*ControlOpen*/
+.ControlOpen {
+	position: relative;
+	height: 16px;
+	border: 2px solid #ccc;
+	width: 50px;
+}
+.ControlOpen small {
+	height: 14px;
+	margin: 1px;
+	display: block;
+	background: #0081cc;
+}
+.ControlOpen b {
+	background: #555;
+	display: block;
+	height: 20px;
+	width: 10px;
+	position: absolute;
+	top: -2px;
+	right: -2px;
+}
+/*ControlClose*/
+.ControlClose {
+	position: relative;
+	height: 16px;
+	border: 2px solid #ccc;
+	width: 50px;
+}
+.ControlClose small {
+	height: 14px;
+	margin: 1px;
+	display: block;
+	background: #ccc;
+}
+.ControlClose b {
+	background: #555;
+	display: block;
+	height: 20px;
+	width: 10px;
+	position: absolute;
+	top: -2px;
+	left: -2px;
+}
+/*For Pad*/
+.PadSystem {
+	font-family: Arial, Helvetica, sans-serif;
+	height: 100%;
+	width: 90%;
+	margin: 0 auto;
+}
+.SystemTitle {
+	height: 20%;
+}
+.SystemTitle h1, .SystemTitle h3 {
+	font-weight: normal;
+	line-height: 300%;
+	font-size: 200%;
+	float: left;
+	color: #fff;
+}
+.SystemTitle h1 {
+	background: url(../img/logo.png) left center no-repeat;
+	background-size: auto 44%;
+	width: 400px;
+	text-indent: -90000px;
+}
+.SystemTitle h3 {
+	line-height: 362%;
+	font-size: 200%;
+	width:200%;
+	float:right;
+	text-align:right;
+}
+.UserInfo {
+	float: right;
+	position: relative;
+}
+.EditUserInfo {
+	background: rgba(255,255,255,1);
+	position: absolute;
+	right: -3px;
+	top: 5em;
+	width: 200%;
+	display: none;
+}
+.EditUserInfo li {
+	display: block;
+	height: 3em;
+	width: 100%;
+}
+.EditUserInfo li a {
+	line-height: 3em;
+	color: rgba(0,0,0,1);
+	display: block;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	text-decoration: none;
+}
+.EditUserInfo li a:hover, .EditUserInfo li a:active {
+	color: rgba(255,255,255,1);
+	background: rgba(70,23,180,1);
+}
+.managementList {
+	float: left;
+	width: 50%;
+	height: 80%;
+}
+.managementList ul {
+	width: 100%;
+	height: 90%;
+}
+.managementList li {
+	float: left;
+	margin: 1%;
+	position: relative;
+	width: 40%;
+	height: 23%;
+	background: rgba(0,204,103,.5);
+	border-width: 1px;
+	border-color:#919191;
+	border-color: rgba(255,255,255,.5);
+	border-style: solid;
+	background: #0a5ac3;
+	border-radius: 0.5em;
+	filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#076ef5, endColorStr=#0050b8);
+	background: linear-gradient(#076ef5, #0050b8);
+	background: -webkit-linear-gradient(#076ef5, #0050b8);
+	background: -moz-linear-gradient#076ef5, #0050b8);
+	background: -ms-linear-gradient(#076ef5, #0050b8);
+}
+.deviceInfo{
+	position:absolute;
+	bottom:2em;
+	left:5%;
+	line-height:200%;
+	font-size:100%;
+}
+.deviceInfo b,
+.deviceInfo span{
+	font-weight:normal;
+	color:#555;
+}
+.deviceInfo span{
+	margin-right:1.4em;
+}
+.addDistributor a {
+	line-height: 40px;
+}/*
+.managementList li.employeeManagement{
+	background:#009bad;
+}
+.managementList li.recordManagement{
+	background:#009c00;
+}
+.managementList li.baseSet{
+	background:#da542c;
+}
+.managementList li.systemSet{
+	background:#0a5ac3;
+}*/
+.managementList li a span {
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-top: 5%;
+	display: block;
+	height: 60%;
+	background-size: auto 100%;
+}
+.managementList li.employeeManagement a span {
+	background-image: url(../img/Padpg_1.png);
+}
+.managementList li.recordManagement a span {
+	background-image: url(../img/Padpg_2.png);
+}
+.managementList li.baseSet a span {
+	background-image: url(../img/Padpg_3.png);
+}
+.managementList li.systemSet a span {
+	background-image: url(../img/Padpg_4.png);
+}
+.managementList li.learn a span {
+	background-image: url(../img/Padpg_5.png);
+}
+.managementList li a {
+	border-width: 4px;
+	border-color:#222222;
+	border-style: solid;
+	display: block;
+	position: absolute;
+	text-decoration: none;
+	color:#ffffff;
+	padding: 4px;
+	top: -5px;
+	right: -5px;
+	left: -5px;
+	bottom: -5px;
+	border-radius: 0.85em;
+}
+.managementList li a:hover {
+	border-color:#656565;
+}
+.managementList li a b {
+	position: absolute;
+	bottom: 5%;
+	left: 5%;
+	font-weight: normal;
+	color: rgba(255,255,255,1);
+}
+.IrisImg {
+	float: left;
+	width: 45%;
+	height: 80%;
+	padding-left:5%;
+	background:url(../img/img.png) no-repeat left top;
+	background-size:auto 100%;
+}
+
+/*bottom*/
+.bottom {
+	opacity:0.7;
+	-webkit-opacity:0.7;
+	-moz-opacity:0.7;
+	filter: alpha(opacity=70);
+	position:absolute;
+	bottom:1em;
+	left:1em;
+	color: #fff;
+	width: 30%;
+	margin: 0 auto;
+	font-size:1em;
+	text-align: left;
+	min-width: 227px;
+}
+.bottom .SystemInfo,
+.bottom .copyright{
+	height:1.5em;
+	color:#fff;
+}
+.bottom .BottomLogo{
+	font-size: 1.3em;
+	background: url(../img/logo.png) left center  no-repeat;
+	background-size: 100%;
+	width: 100%;
+	text-indent: -90000px;
+}
+.CardRegBox{
+	clear:both;
+	margin:1em;
+	position:relative;
+	width:320px;
+	height:200px;
+	border-radius: 12px;
+	border:2px solid #fff;
+}
+.CardRegBox.warning{
+	border:2px solid #F00;
+}
+.CardReg{
+	padding:10px;
+	border-width:10px;
+	border-color:#d4d4d4 #888888 #acacac #e5e5e5;
+	border-style:solid;
+	border-radius:10px;
+	height:160px;
+	width:280px;
+	background:#cccccc;
+	cursor:pointer;
+}
+.CardReg .CardTip{
+	display:block;
+	text-align:right;
+	color:#FF0000;	
+}
+.CardRegHall{
+	position: absolute;
+	height: 50px;
+	width: 11px;
+	border-radius: 8px;
+	left: 15px;
+	top: 71px;
+	display: block;
+	background:#fff;
+}
+.CardRegHall div{
+	border-width:2px;
+	border-color:#d4d4d4 #e5e5e5 #888888 #acacac ;
+	border-style:solid;
+	height:46px;
+	width:7px;
+}
+.CardRegBarcode{
+	position: absolute;
+	bottom: 15px;
+	right: 20px;
+	font-size: 1em;
+	color: #333;
+	border: 0;
+	background: #CCC;
+	text-align: right;
+	width: 280px;
+}

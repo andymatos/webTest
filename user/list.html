@@ -1,0 +1,154 @@
+<script language="javascript">
+	var onepage = 15;
+	var search_val = '';
+	var pager = {
+			count:0,
+			onepage:onepage, 
+			pages:1,
+			currpage:1,
+			pre_page:1,
+			next_page:1,
+	};
+
+	function search(){
+		search_val = $('#search').val();
+		changePage();
+	}
+	function changePage(page){
+		page = (page=="" || page==undefined)?1:page;
+		start = (page-1)*pager.onepage;
+		limit = pager.onepage;
+		var search = '';
+		if(search_val != '')
+			search = '&userid='+search_val;
+		$.getxml({
+			url: "../goform/userlist",
+			data:"start="+start+"&limit="+limit+search,
+			success:function(result){
+				var record = result.record;
+				var listHtml = "";
+				$("#userList .TableList tbody").empty();
+				
+				$.each(result.record, function(i,user){
+					listHtml += "<tr>";
+						listHtml += "<td><input type='checkbox' name='userChk' value='"+user.userid+"' /></td>";
+						listHtml += "<td>"+user.userid+"</td>";
+						listHtml += "<td>"+user.username+"</td>";
+						listHtml += "<td>"+user.cardid+"</td>";
+						listHtml += "<td>"
+						if(session_id != user.userid && session_power == 1){
+							listHtml += "<a href=\"#\" onclick=\"return deleteUser('"+user.userid+"');\" class=\"DelUser\">Delete</a>";
+						}
+						listHtml += "<a href=\"#\" onclick=\"return editUser('"+user.userid+"','"+user.username+"','"+user.cardid+"','"+user.mode+"');\" class=\"EditUser\"> Edit </a>";
+						listHtml += "</td>";
+					listHtml += "</tr>";
+				});
+				
+				$("#userList .TableList tbody").html(listHtml);
+				
+				var pageHtml = "";
+				pager = Getpager(result.count,page);
+				pageHtml = "<ul>";
+				pageHtml += "<li><a href=\"#\" onClick=\"return changePage(1)\">First Page</a></li>";
+				pageHtml += "<li><a href=\"#\" onClick=\"return changePage("+pager.pre_page+")\">Previous</a></li>";
+				for(var i=1;i<=pager.pages;i++){
+					if(i==pager.currpage)
+						pageHtml += "<li class=\"select\">";
+					else
+						pageHtml += "<li>";
+						
+					pageHtml += "<a href=\"#\" onClick=\"return changePage("+i+")\">"+i+"</a></li>";
+				}
+				
+				pageHtml += "<li><a href=\"#\" onClick=\"return changePage("+pager.next_page+")\">Next</a></li>";
+				pageHtml += "<li><a href=\"#\" onClick=\"return changePage("+pager.pages+")\">Last Page</a></li>";
+				$("#userList div.page").html(pageHtml);
+			}
+		});
+		
+		return false;
+	}
+	function deleteChkUser(){
+		if($("input[name='userChk']:checked").length<=0){
+			alert("Please select the user");
+			return false;
+		}
+		if(!confirm("Are you sure?")){
+			return false;
+		}
+		var ids='';
+		$("input[name='userChk']:checked").each(function(){
+			if(ids != '')
+				ids = ids+',';
+			ids = ids+$(this).val();
+		});
+		deleteUser(ids,true);
+	}
+	function deleteUser(userid, conf){
+		if(!conf){
+			if(!confirm("Are you sure?")){
+				return false;
+			}
+		}
+		$.getxml({
+			url: "../goform/deleteuser",
+			data:"userid="+userid,
+			success:function(result){
+					changePage(pager.currpage);
+			}
+		});
+		
+		return false;
+	}
+	function editUser(userid,username,cardid,mode){
+		$(".RightContentWrapper").empty().append($("#loadingDiv").clone().html());
+		edit_userid = userid;
+		edit_username = username;
+		edit_cardid = cardid;
+		edit_mode = mode;
+		var url = "edit.html";
+		$(".RightContentWrapper").load(url,function(data){
+			
+		});
+	}
+	
+$(function(){
+	changePage();
+	
+	$("input[name='userChkAll']").click(function(){
+		if($(this).attr("checked")){
+			$("input[name='userChk']").attr("checked",true);
+		}else{
+			$("input[name='userChk']").removeAttr("checked");
+		}
+	});
+});
+</script>
+<div class="item" id="userList">
+  <h2 class="title">User List<span style="display:block; float:right;"><input type="text" id="search" value="" /><input type="button" value="Search" onclick="search();" /></span></h2>
+  <!--
+  <form class="search" action="">
+    <label>编号</label>
+    <input class="s" value=" " type="text" autocomplete="off" />
+    <label>开始时间</label>
+    <input class="s" value="2012-11-23" type="text" autocomplete="off" />
+    <label>结束时间</label>
+    <input class="s" value="2013-3-23" type="text" autocomplete="off" />
+    <input class="btn" value=" " type="submit" />
+  </form>
+  -->
+  <table cellpadding="0" cellspacing="0" border="0" class="TableList">
+    <thead>
+      <tr>
+      	<th><input type="checkbox" name="userChkAll" /></th>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>Card ID</th>
+        <th>Operation</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <a href="javascript:void(0);" onclick="return deleteChkUser();" class="DelUser">Delete Selected</a><div class="page"></div>
+</div>
